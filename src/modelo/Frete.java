@@ -1,3 +1,4 @@
+package modelo;
 public class Frete {
     private Cliente cliente;
     private Carga carga;
@@ -29,6 +30,18 @@ public class Frete {
 
     public Cliente getCliente() {
         return cliente;
+    }
+
+    public Carga getCarga() {
+        return carga;
+    }
+
+    public Motorista getMotorista() {
+        return motorista;
+    }
+
+    public double getDistanciaKm() {
+        return distanciaKm;
     }
 
     public double getValorTotal() {

@@ -1,3 +1,5 @@
+package modelo;
+
 public class Motorista {
     private String nome;
     private String cnh;

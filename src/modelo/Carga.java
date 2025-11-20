@@ -1,3 +1,5 @@
+package modelo;
+
 public class Carga {
     private double pesokg;
     private String tipo;

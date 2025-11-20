@@ -1,3 +1,5 @@
+package modelo;
+
 public class ClientePrioritarios extends Cliente {
 
     public ClientePrioritarios(String nome, String cnpj, String contrato) {

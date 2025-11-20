@@ -1,3 +1,5 @@
+package modelo;
+
 public class ClienteEmpresarial extends Cliente {
 
     public ClienteEmpresarial (String nome, String cnpj, String contrato) {
