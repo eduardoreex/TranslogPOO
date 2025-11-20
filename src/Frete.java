@@ -4,12 +4,12 @@ public class Frete {
     private Motorista motorista;
     private double distanciaKm;
     private double valorTotal;
-    public Frete (Cliente cliente, Carga carga, Motorista motorista, double distanciaKm, double valorTotal) {
+
+    public Frete (Cliente cliente, Carga carga, Motorista motorista, double distanciaKm) {
         this.carga = carga;
         this.cliente = cliente;
         this.distanciaKm = distanciaKm;
         this.motorista = motorista;
-        this.valorTotal = valorTotal;
     }
     public double calcularFrete() {
         double precoPorkm =  this.carga.getValorBaseKm();
@@ -25,5 +25,13 @@ public class Frete {
         this.valorTotal = valorFinal;
 
         return valorFinal;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public double getValorTotal() {
+        return valorTotal;
     }
 }
