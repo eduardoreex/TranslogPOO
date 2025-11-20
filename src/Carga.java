@@ -36,7 +36,7 @@ public class Carga {
         } else if(tipo.equalsIgnoreCase("media")){
             return 6.00;
         } else if (tipo.equalsIgnoreCase("pesada")) {
-            return 10.00;
+            return 9.00;
         } else {
             return 0.0;
         }
