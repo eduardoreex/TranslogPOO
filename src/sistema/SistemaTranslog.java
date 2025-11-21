@@ -174,7 +174,7 @@ public class SistemaTranslog {
         // porque precisamos do Frete
     }
 
-    private Cliente buscarCliente(String nome) {
+    public Cliente buscarCliente(String nome) {
         for (Cliente c : clientes) {
             if (c.getNome().equalsIgnoreCase(nome)) {
                 return c;
@@ -182,7 +182,7 @@ public class SistemaTranslog {
         }
         return null;
     }
-    private Motorista buscarMotorista(String nome) {
+    public Motorista buscarMotorista(String nome) {
         for (Motorista m : motoristas) {
             if (m.getNome().equalsIgnoreCase(nome)) {
                 return m;
