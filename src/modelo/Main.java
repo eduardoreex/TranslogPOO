@@ -226,7 +226,7 @@ public class Main {
     public static LocalDateTime lerData(Scanner scanner) {
         while (true) {
             try {
-                System.out.print("Digite a data (dd/MM/yyyy HH:mm): ");
+                System.out.print("Digite a data e a hora (dd/MM/yyyy HH:mm): ");
                 String dataTexto = scanner.nextLine();
 
                 DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
