@@ -11,7 +11,6 @@ public class SistemaTranslog {
     private ArrayList<Motorista> motoristas = new ArrayList<>();
     private ArrayList<Agendamento> agendamentos = new ArrayList<>();
     private ArrayList<Frete> fretes = new ArrayList<>();
-
     private final String DIR = "dados/";
 
     public SistemaTranslog() {
@@ -93,17 +92,18 @@ public class SistemaTranslog {
 
     private void salvarFretes() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(DIR + "fretes.txt"))) {
-
             for (Frete f : fretes) {
-                // Salvando apenas o nome do cliente
-                bw.write(f.getCliente().getNome());
+                bw.write(f.getCliente().getNome() + ";" +
+                        f.getCarga().getTipo() + ";" +
+                        f.getMotorista().getNome() + ";" +
+                        f.getDistanciaKm());
                 bw.newLine();
             }
-
         } catch (Exception e) {
             System.out.println("Erro ao salvar fretes!");
         }
     }
+
 
     private void carregarDados() {
         carregarClientes();
@@ -152,8 +152,18 @@ public class SistemaTranslog {
         File arq = new File(DIR + "fretes.txt");
         if (!arq.exists()) return;
 
-        // Não é possível reconstruir um Frete apenas com "nome do cliente".
-        // É necessário Cliente + Motorista + Carga + Distância
+        try (BufferedReader br = new BufferedReader(new FileReader(arq))) {
+            String linha;
+
+            while ((linha = br.readLine()) != null) {
+                String[] p = linha.split(";");
+                Cliente cli = buscarCliente(p[0]);
+                Motorista mot = buscarMotorista(p[2]);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao carregar motoristas!");
+        }
     }
 
     private void carregarAgendamentos() {
@@ -164,7 +174,32 @@ public class SistemaTranslog {
         // porque precisamos do Frete
     }
 
-    public ArrayList<Cliente> getClientes() { return clientes; }
-    public ArrayList<Motorista> getMotoristas() { return motoristas; }
-    public ArrayList<Agendamento> getAgendamentos() { return agendamentos; }
-    public ArrayList<Frete> getFretes() { return fretes; }}
+    private Cliente buscarCliente(String nome) {
+        for (Cliente c : clientes) {
+            if (c.getNome().equalsIgnoreCase(nome)) {
+                return c;
+            }
+        }
+        return null;
+    }
+    private Motorista buscarMotorista(String nome) {
+        for (Motorista m : motoristas) {
+            if (m.getNome().equalsIgnoreCase(nome)) {
+                return m;
+            }
+        }
+        return null;
+    }
+    public ArrayList<Cliente> getClientes () {
+                return clientes;
+            }
+    public ArrayList<Motorista> getMotoristas () {
+                return motoristas;
+            }
+    public ArrayList<Agendamento> getAgendamentos () {
+                return agendamentos;
+            }
+    public ArrayList<Frete> getFretes () {
+                return fretes;
+            }
+        }
