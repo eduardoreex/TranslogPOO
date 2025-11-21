@@ -132,6 +132,33 @@ public class SistemaTranslog {
         }
     }
 
+    public void carregarClientesDeArquivo(String caminho) {
+        try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+
+            String linha;
+
+            while ((linha = br.readLine()) != null) {
+
+                String[] partes = linha.split(";");
+
+                if (partes.length == 3) {
+                    Cliente cliente = new Cliente(
+                            partes[0], // nome
+                            partes[1], // cpf
+                            partes[2]  // contato
+                    );
+
+                    clientes.add(cliente);
+                }
+            }
+
+            System.out.println("Clientes carregados com sucesso!");
+
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar clientes: " + e.getMessage());
+        }
+    }
+
     private void carregarMotoristas() {
         File arq = new File(DIR + "motoristas.txt");
         if (!arq.exists()) return;

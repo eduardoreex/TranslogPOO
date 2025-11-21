@@ -35,7 +35,8 @@ public class Carga {
     public double getValorBaseKm() {
         if(tipo.equalsIgnoreCase("leve")) {
             return 5.00;
-        } else if(tipo.equalsIgnoreCase("media")){
+        } else if(tipo.equalsIgnoreCase("media")||
+                tipo.equalsIgnoreCase("média")){
             return 8.00;
         } else if (tipo.equalsIgnoreCase("pesada")) {
             return 12.00;
