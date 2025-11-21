@@ -159,7 +159,7 @@ public class SistemaTranslog {
             while ((linha = br.readLine()) != null) {
                 String[] p = linha.split(";");
                 Cliente cli = buscarCliente(p[0]);
-                Motorista mot = buscarMotorista(p[2]);
+                Motorista mot = buscarMotorista(p[1]);
 
                 if (cli != null && mot != null) {
                     double km = Double.parseDouble(p[2]);
@@ -188,7 +188,7 @@ public class SistemaTranslog {
 
     public Cliente buscarCliente(String nome) {
         for (Cliente c : clientes) {
-            if (c.getNome().equalsIgnoreCase(nome)) {
+            if (c.getNome().trim().equalsIgnoreCase(nome.trim())) {
                 return c;
             }
         }
@@ -196,7 +196,7 @@ public class SistemaTranslog {
     }
     public Motorista buscarMotorista(String nome) {
         for (Motorista m : motoristas) {
-            if (m.getNome().equalsIgnoreCase(nome)) {
+            if (m.getNome().trim().equalsIgnoreCase(nome.trim())) {
                 return m;
             }
         }

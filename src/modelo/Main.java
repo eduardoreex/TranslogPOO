@@ -2,9 +2,11 @@ package modelo;
 import sistema.SistemaTranslog;
 import modelo.*;
 import java.time.format.DateTimeFormatter;
-
 import javax.xml.transform.Source;
+import java.time.LocalDateTime;
+
 import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -61,8 +63,6 @@ public class Main {
                     sistema.cadastrarCliente(novoCliente);
                     System.out.println("Cliente cadastrado com sucesso!");
                     break;
-
-                    break;
                 case 2:
                     System.out.println("\n=== Novo do Motorista ===");
                     System.out.println("Nome do Motorista: ");
@@ -98,25 +98,46 @@ public class Main {
                         break;
                     }
                     System.out.println("Dados da Carga:");
-                    System.out.print("Descrição: ");
-                    String descCarga = scanner.nextLine();
-
                     System.out.print("Tipo - leve/média ou pesada: ");
                     String tipoCarga = scanner.nextLine();
+
+                    System.out.print("Peso (kg): ");
+                    double pesoCarga = scanner.nextDouble();
 
                     System.out.print("É perigosa? - true ou false: ");
                     boolean perigosa = scanner.nextBoolean();
                     scanner.nextLine();
-
-                    Carga novaCarga = new Carga(descCarga, tipoCarga, perigosa);
-
+                    Carga novaCarga = new Carga(tipoCarga, pesoCarga, perigosa);
                     System.out.print("Distância em KM (use virgula, ex: 100,5): ");
 
                     double km = scanner.nextDouble();
                     scanner.nextLine();
                     Frete novoFrete = sistema.criarFrete(cliEncontrado, motEncontrado, novaCarga, km);
 
-                    System.out.println("Valor do Frete : R$ " + novoFrete.getValorTotal() );
+                    System.out.println("Valor do Frete : R$%.2f%n " + novoFrete.getValorTotal() );
+
+                    System.out.println("\n=== Agendamento ===");
+                    System.out.print("Digite a data da entrega (dd/MM/yyyy HH:mm): ");
+                    String dataTexto = scanner.nextLine();
+
+                      try {
+                        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH");
+                        LocalDateTime dataAgendada = LocalDateTime.parse(dataTexto, formatador);
+
+                        sistema.agendar(novoFrete, dataAgendada);
+                        System.out.println(">> Agendamento realizado para: " + dataTexto);
+                        break;
+                      } catch (Exception e) {
+                          System.out.println(" Data inválida! O agendamento falhou. Use o formato: dia/mês/ano hora");
+                      }
+
+                    System.out.println("Deseja emitir Nota Fiscal? (s/n)");
+                    String respNota = scanner.nextLine();
+
+                    if (respNota.equalsIgnoreCase("s")) {
+                        NotaFiscal nf = new NotaFiscal(novoFrete);
+                        nf.imprimir();
+                    }
                     break;
 
                 case 4:
