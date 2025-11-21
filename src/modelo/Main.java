@@ -23,14 +23,34 @@ public class Main {
             System.out.println("4. Listar Fretes ");
             System.out.println("0. Sair");
 
-            // Proteção do menu
             int opcao = lerInteiro(scanner, "Escolha uma opção: ", 0, 4);
 
             switch (opcao) {
 
                 case 0:
+                    System.out.println("\n=== RELATÓRIO FINAL ===");
+
+                    if (sistema.getFretes().isEmpty()) {
+                        System.out.println("Nenhum frete foi registrado.");
+                    } else {
+                        double totalGeral = 0;
+
+                        for (Frete f : sistema.getFretes()) {
+                            System.out.println(
+                                    "Cliente: " + f.getCliente().getNome() +
+                                            " | Motorista: " + f.getMotorista().getNome() +
+                                            " | Valor: R$ " + String.format("%.2f", f.getValorTotal())
+                            );
+
+                            totalGeral += f.getValorTotal();
+                        }
+
+                        System.out.println("\nTotal de fretes: " + sistema.getFretes().size());
+                        System.out.printf("Valor total movimentado: R$ %.2f%n", totalGeral);
+                    }
+
+                    System.out.println("\nSistema finalizado.");
                     executando = false;
-                    System.out.println("Encerrando sistema...");
                     break;
 
                 case 1:
@@ -104,7 +124,7 @@ public class Main {
 
                     double pesoCarga = lerDouble(scanner, "Peso (kg): ");
 
-                    boolean perigosa = lerBoolean(scanner, "Carga perigosa? (true/false): ");
+                    boolean perigosa = lerBoolean(scanner, "Carga perigosa? (true/false ou sim/não): ");
 
                     Carga novaCarga = new Carga(tipoCarga, pesoCarga, perigosa);
 
@@ -119,13 +139,11 @@ public class Main {
 
                     System.out.printf("Valor do frete: R$ %.2f%n", novoFrete.getValorTotal());
 
-                    // Data protegida
                     LocalDateTime dataAgendada = lerData(scanner);
                     sistema.agendar(novoFrete, dataAgendada);
 
                     System.out.println("Frete agendado com sucesso!");
 
-                    // Nota Fiscal
                     System.out.print("Deseja emitir Nota Fiscal? (s/n): ");
                     String respNota = scanner.nextLine();
 
@@ -139,9 +157,13 @@ public class Main {
                 case 4:
                     System.out.println("\n=== Lista de Fretes ===");
 
-                    for (Frete f : sistema.getFretes()) {
-                        System.out.println("Cliente: " + f.getCliente().getNome()
-                                + " | Valor: R$ " + f.getValorTotal());
+                    if (sistema.getFretes().isEmpty()) {
+                        System.out.println("Nenhum frete cadastrado.");
+                    } else {
+                        for (Frete f : sistema.getFretes()) {
+                            System.out.println("Cliente: " + f.getCliente().getNome()
+                                    + " | Valor: R$ " + String.format("%.2f", f.getValorTotal()));
+                        }
                     }
                     break;
             }
@@ -150,7 +172,7 @@ public class Main {
         scanner.close();
     }
 
-    // Funções de proteção
+    // ================= FUNÇÕES DE PROTEÇÃO =================
 
     public static int lerInteiro(Scanner scanner, String mensagem, int min, int max) {
         int valor;
@@ -192,7 +214,8 @@ public class Main {
                 return true;
             }
 
-            if (entrada.equals("false") || entrada.equals("f") || entrada.equals("nao") || entrada.equals("não") || entrada.equals("n")) {
+            if (entrada.equals("false") || entrada.equals("f") || entrada.equals("nao")
+                    || entrada.equals("não") || entrada.equals("n")) {
                 return false;
             }
 
