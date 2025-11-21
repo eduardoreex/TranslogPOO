@@ -1,6 +1,7 @@
 package modelo;
 import sistema.SistemaTranslog;
 import modelo.*;
+import java.time.format.DateTimeFormatter;
 
 import javax.xml.transform.Source;
 import java.util.Scanner;
@@ -39,9 +40,27 @@ public class Main {
                     System.out.println("Contrato: ");
                     String contrato = scanner.nextLine();
 
-                    Cliente novoCliente = new ClienteEmpresarial(nomeCli, cnpj, contrato);
+                    System.out.println("Selecione o Tipo de Cliente: ");
+                    System.out.println("1 - Empresarial (10% desconto)");
+                    System.out.println("2 - Prioritário (20% desconto)");
+                    System.out.print("Opção: ");
+
+                    int tipoCliente = scanner.nextInt();
+                    scanner.nextLine();
+
+                    Cliente novoCliente = null;
+
+                    if (tipoCliente == 1) {
+                        novoCliente = new ClienteEmpresarial(nomeCli, cnpj, contrato);
+                    } else if (tipoCliente == 2) {
+                        novoCliente = new ClientePrioritarios(nomeCli,cnpj,contrato);
+                    } else {
+                    System.out.println("Opção inválida. Criando como genérico.");
+                        novoCliente = new Cliente(nomeCli, cnpj, contrato);
+                    }
                     sistema.cadastrarCliente(novoCliente);
-                    System.out.println("Cliente salvo!");
+                    System.out.println("Cliente cadastrado com sucesso!");
+                    break;
 
                     break;
                 case 2:

@@ -94,13 +94,14 @@ public class SistemaTranslog {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(DIR + "fretes.txt"))) {
             for (Frete f : fretes) {
                 bw.write(f.getCliente().getNome() + ";" +
-                        f.getCarga().getTipo() + ";" +
                         f.getMotorista().getNome() + ";" +
-                        f.getDistanciaKm());
+                        f.getDistanciaKm() + ";" +
+                        f.getCarga().getTipo() + ";" +
+                        f.getCarga().isPerigosaOuFragil());
                 bw.newLine();
             }
         } catch (Exception e) {
-            System.out.println("Erro ao salvar fretes!");
+            System.out.println("Erro ao salvar fretes!" + e.getMessage());
         }
     }
 
@@ -159,6 +160,17 @@ public class SistemaTranslog {
                 String[] p = linha.split(";");
                 Cliente cli = buscarCliente(p[0]);
                 Motorista mot = buscarMotorista(p[2]);
+
+                if (cli != null && mot != null) {
+                    double km = Double.parseDouble(p[2]);
+                    String tipoCarga = p[3];
+                    boolean perigosa = Boolean.parseBoolean(p[4]);
+
+                    Carga cargaRecuperada = new Carga(tipoCarga, 0.0, perigosa);
+
+                    Frete f = new Frete(cli, cargaRecuperada, mot, km);
+                    fretes.add(f);
+                }
             }
 
         } catch (Exception e) {
