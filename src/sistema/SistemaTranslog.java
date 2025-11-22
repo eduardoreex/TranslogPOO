@@ -11,7 +11,7 @@ public class SistemaTranslog {
     private ArrayList<Motorista> motoristas = new ArrayList<>();
     private ArrayList<Agendamento> agendamentos = new ArrayList<>();
     private ArrayList<Frete> fretes = new ArrayList<>();
-    private final String DIR = "dados/";
+    private final String DIR = "G:/Meu Drive/TranslogDados/";
 
     public SistemaTranslog() {
         new File(DIR).mkdir();
