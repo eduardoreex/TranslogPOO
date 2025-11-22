@@ -1,10 +1,10 @@
 package modelo;
 
 import sistema.SistemaTranslog;
-
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
@@ -102,26 +102,49 @@ public class Main {
                 case 3:
                     System.out.println("\n=== Criando Frete ===");
 
-                    System.out.print("Nome do Cliente: ");
-                    String buscaCli = scanner.nextLine();
-                    Cliente cliEncontrado = sistema.buscarCliente(buscaCli);
+                    Cliente cliEncontrado = null;
+                    while (cliEncontrado == null) {
 
-                    if (cliEncontrado == null) {
-                        System.out.println("Cliente não encontrado.");
-                        break;
+                        System.out.println("=== Clientes Disponíveis ===");
+                        for (Cliente c : sistema.getClientes()) {
+                            System.out.println("- " + c.getNome());
+                        }
+                        System.out.print("Digite o nome do Cliente: ");
+                        String buscaCli = scanner.nextLine();
+
+                        cliEncontrado = sistema.buscarCliente(buscaCli);
+
+                        if (cliEncontrado == null) {
+                            System.out.println("Erro: Cliente não encontrado! Tente novamente.");
+                        }
+                    }
+                    Motorista motEncontrado = null;
+                    while (motEncontrado == null) {
+                        System.out.println("=== Motoristas Disponíveis ===");
+
+                        if (sistema.getMotoristas().isEmpty()) {
+                            System.out.println("(Nenhum motorista cadastrado!)");
+                            break;
+                        }
+
+                        for (Motorista m : sistema.getMotoristas()) {
+                            System.out.println("- " + m.getNome());
+                        }
+
+                        System.out.print("Digite o nome do Motorista: ");
+                        String buscaMot = scanner.nextLine();
+
+                        motEncontrado = sistema.buscarMotorista(buscaMot);
+
+                        if (motEncontrado == null) {
+                            System.out.println("Erro: Motorista não encontrado! Tente novamente.");
+                        }
                     }
 
-                    System.out.print("Nome do Motorista: ");
-                    String buscaMot = scanner.nextLine();
-                    Motorista motEncontrado = sistema.buscarMotorista(buscaMot);
-
-                    if (motEncontrado == null) {
-                        System.out.println("Motorista não encontrado.");
-                        break;
-                    }
-
-                    System.out.print("Tipo da carga (leve/média/pesada): ");
-                    String tipoCarga = scanner.nextLine();
+                    if (motEncontrado == null) break;
+                    String tipoCarga = lerTextoValidado(scanner,
+                            "Tipo da carga (leve, media, pesada): ",
+                            new String[]{"leve", "media", "pesada"});
 
                     double pesoCarga = lerDouble(scanner, "Peso (kg): ");
 
@@ -202,8 +225,19 @@ public class Main {
         scanner.close();
     }
 
-    // ================= FUNÇÕES DE PROTEÇÃO =================
+    public static String lerTextoValidado(Scanner scanner, String mensagem, String[] opcoesValidas) {
+        while (true) {
+            System.out.print(mensagem);
+            String entrada = scanner.nextLine().trim();
 
+            for (String opcao : opcoesValidas) {
+                if (entrada.equalsIgnoreCase(opcao)) {
+                    return opcao;
+                }
+            }
+            System.out.println(" Erro: Opção inválida! Escolha entre: " + Arrays.toString(opcoesValidas));
+        }
+    }
     public static int lerInteiro(Scanner scanner, String mensagem, int min, int max) {
         int valor;
         while (true) {
