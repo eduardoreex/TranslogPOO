@@ -51,15 +51,15 @@ O sistema permite:
 
 O projeto está organizado nos seguintes pacotes:
 
-- `modelo`: Contém as classes principais do sistema (Cliente, Frete, Carga, Agendamento, etc).
+- `modelo`: Contém as classes principais do sistema (Main, Cliente, Frete, Carga, Agendamento, etc).
 - `sistema`: Contém a classe `SistemaTranslog`, responsável por gerenciar as operações.
-- `main`: Contém a classe `Main`, responsável por executar o sistema no console.
+
 
 Exemplo:
 src/
 ├── modelo/
 ├── sistema/
-└── main/
+
 
 
 ---
@@ -74,7 +74,45 @@ src/
 2. Clique em **Code** → **Download ZIP**
 3. Extraia o arquivo em sua máquina.
 
----
+### 5.2 Pelo GitHub (Usando git clone)
+
+Se você já tem o Git instalado, pode clonar o projeto pelo terminal:
+
+git clone https://github.com/eduardoreex/TranslogPOO.git
+
+
+Depois disso:
+
+Abra o IntelliJ IDEA
+
+Clique em File → Open
+
+Selecione a pasta do projeto clonado (TranslogPOO)
+
+Aguarde o carregamento completo do projeto
+
+--- 
+### 5.3. Sistema de Salvamento no Google Drive
+
+O projeto utiliza uma pasta sincronizada do Google Drive, sem uso de API.
+
+Os dados são salvos automaticamente em arquivos .txt dentro da pasta:
+
+G:/Meu Drive/TranslogDados/
+
+Arquivos utilizados:
+
+clientes.txt
+
+motoristas.txt
+
+fretes.txt
+
+agendamentos.txt
+
+Esses arquivos são sincronizados automaticamente pelo Google Drive, permitindo acesso aos dados em qualquer computador conectado à mesma conta.
+
+Não é utilizada nenhuma API do Google, apenas a sincronização local do Drive.
 
 ## 6. Como Rodar o Projeto em sua Máquina
 
@@ -84,50 +122,90 @@ Você precisa ter instalado:
 
 - Java JDK 17 ou superior
 - IntelliJ IDEA (ou Eclipse / VS Code com extensão Java)
+- Google Drive 
 
----
+6.2 Configurando o Google Drive
 
-### 6.2 Passo a passo no IntelliJ IDEA
+Instale o Google Drive no seu computador.
 
-1. Abra o IntelliJ IDEA.
-2. Clique em **File → Open**.
-3. Selecione a pasta do projeto (onde está a pasta `src`).
-4. Aguarde o carregamento do projeto.
-5. Vá até o arquivo:
+Crie a pasta:
+
+G:/Meu Drive/TranslogDados/
+
+
+Dentro dela, crie os arquivos:
+
+clientes.txt
+motoristas.txt
+fretes.txt
+agendamentos.txt
+
+
+Se os arquivos não existirem, o próprio sistema tentará criá-los automaticamente.
+
+6.3 Executando no IntelliJ
+
+Abra o IntelliJ IDEA
+
+Clique em File → Open
+
+Selecione a pasta do projeto
+
+Aguarde o carregamento completo
+
+Abra o arquivo:
 
 src/main/Main.java
 
 
-
-6. Clique com o botão direito na classe `Main`.
-7. Clique em **Run 'Main'**.
+Clique com o botão direito → Run 'Main'
 
 O sistema será iniciado no terminal do IntelliJ.
 
 ---
 
-## 7. Como Usar o Sistema
+## 7.. Como Usar o Sistema
 
-Quando o programa iniciar, aparecerá um menu como este:
+Ao iniciar, será apresentado um menu semelhante a este:
 
-=== Menu Translog ===
-
-Cadastrar Cliente
-
-Cadastrar Motorista
-
-Criar Frete
-
-Listar Fretes
-
-Sair
+===== Sistema Translog =====
+1 - Cadastrar Cliente
+2 - Cadastrar Motorista
+3 - Criar Frete
+4 - Listar Fretes
+5 - Gerar Relatório
+6 - Sair
 
 
-Basta digitar o número da opção desejada e seguir as instruções mostradas no terminal.
+Digite o número da opção desejada e siga as instruções exibidas no terminal.
+
+Ao escolher a opção Sair, o sistema:
+
+Salva todos os dados
+Gera um relatório final
+Encerra corretamente o programa
 
 ---
 
-## 8. Tecnologias Utilizadas
+### 8 Relatório Final
+
+Ao encerrar o sistema, é gerado um relatório contendo:
+
+Tempo total de execução
+
+Número de operações realizadas
+
+Quantidade de fretes criados
+
+Quantidade de cadastros realizados
+
+Tarefas executadas por status
+
+Resumo geral do uso do sistema
+
+Esse relatório pode futuramente ser adaptado para exportação em PDF.
+
+## 9. Tecnologias Utilizadas
 
 - Java 17
 - IntelliJ IDEA
@@ -136,14 +214,14 @@ Basta digitar o número da opção desejada e seguir as instruções mostradas n
 
 ---
 
-## 9. Considerações Finais
+## 10. Considerações Finais
+O Sistema Translog foi desenvolvido com fins acadêmicos, permitindo a aplicação prática dos conceitos de Programação Orientada a Objetos, organização de sistemas, persistência de dados e controle de fluxo em aplicações Java.
 
-O desenvolvimento do Sistema Translog permitiu aplicar na prática os conceitos fundamentais da Programação Orientada a Objetos, promovendo melhor entendimento sobre organização de código, modelagem de classes, encapsulamento e tratamento de erros em Java.
+Este projeto possui finalidade exclusivamente educacional e não possui fins comerciais.
 
-Este projeto é de finalidade **acadêmica**, sem fins comerciais.
 
 ---
 
-## 10. Licença
+## 11. Licença
 
 Projeto desenvolvido para fins educacionais no curso de Engenharia de Software da Faculdade ICEV.
