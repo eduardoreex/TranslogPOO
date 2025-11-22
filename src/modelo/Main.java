@@ -21,9 +21,10 @@ public class Main {
             System.out.println("2. Cadastrar Motorista");
             System.out.println("3. Criar Frete");
             System.out.println("4. Listar Fretes ");
+            System.out.println("5. Concluir Entrega (Simulação) ");
             System.out.println("0. Sair");
 
-            int opcao = lerInteiro(scanner, "Escolha uma opção: ", 0, 4);
+            int opcao = lerInteiro(scanner, "Escolha uma opção: ", 0, 5);
 
             switch (opcao) {
 
@@ -163,6 +164,35 @@ public class Main {
                         for (Frete f : sistema.getFretes()) {
                             System.out.println("Cliente: " + f.getCliente().getNome()
                                     + " | Valor: R$ " + String.format("%.2f", f.getValorTotal()));
+                        }
+                    }
+                    break;
+                case 5:
+                    System.out.println("\n=== Concluir Entrega ===");
+                    if (sistema.getAgendamentos().isEmpty()) {
+                        System.out.println("Não há agendamentos para concluir.");
+                    } else {
+                        for (int i = 0; i < sistema.getAgendamentos().size(); i++) {
+                            Agendamento ag = sistema.getAgendamentos().get(i);
+                            System.out.println(i + " - Entrega para: " + ag.getFrete().getCliente().getNome() +
+                                    " | Data Prevista: " + ag.getDataAgendada());
+                        }
+
+                        int idAg = lerInteiro(scanner, "Digite o número do agendamento para finalizar: ", 0, sistema.getAgendamentos().size() - 1);
+                        Agendamento agSelecionado = sistema.getAgendamentos().get(idAg);
+
+                        System.out.println("Simulando data de entrega realizada...");
+
+                        LocalDateTime dataReal = lerData(scanner);
+
+                        agSelecionado.confirmarEntrega(dataReal);
+                        double multa = agSelecionado.calcularMulta();
+
+                        System.out.println("Entrega confirmada!");
+                        if (multa > 0) {
+                            System.out.printf("ATENÇÃO: Entrega atrasada! Multa aplicada de R$ %.2f%n", multa);
+                        } else {
+                            System.out.println("Entrega no prazo. Sem multa.");
                         }
                     }
                     break;

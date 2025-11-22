@@ -51,8 +51,9 @@ public class SistemaTranslog {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(DIR + "clientes.txt"))) {
 
             for (Cliente c : clientes) {
-                // ClienteEmpresarial recebe : nome ; cnpj ; contrato
-                bw.write(c.getNome() + ";" + c.getCnpj() + ";" + c.getContrato());
+                String tipo = (c instanceof ClientePrioritarios) ? "2" : "1";
+
+                bw.write(tipo + ";"+ c.getNome() + ";" + c.getCnpj() + ";" + c.getContrato());
                 bw.newLine();
             }
 
@@ -123,8 +124,20 @@ public class SistemaTranslog {
             while ((linha = br.readLine()) != null) {
                 String[] p = linha.split(";");
 
-                // Agora deve ter 3 campos: nome ; cnpj ; contrato
-                clientes.add(new ClienteEmpresarial(p[0], p[1], p[2]));
+                if (p.length >= 4) {
+                    String tipo = p[0];
+                    String nome = p[1];
+                    String cnpj = p[2];
+                    String contrato = p[3];
+
+                    Cliente c;
+                    if (tipo.equals("2")) {
+                        c = new ClientePrioritarios(nome, cnpj, contrato);
+                    } else {
+                        c = new ClienteEmpresarial(nome, cnpj, contrato);
+                    }
+                    clientes.add(c);
+                }
             }
 
         } catch (Exception e) {

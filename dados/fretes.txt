@@ -1,1 +1,0 @@
-EDU;EDUARD;779.0;LEV;true
