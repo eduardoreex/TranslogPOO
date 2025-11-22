@@ -81,7 +81,6 @@ public class SistemaTranslog {
 
             for (Agendamento a : agendamentos) {
 
-                // salvar apenas a data agendada
                 bw.write(a.getDataAgendada().toString());
                 bw.newLine();
             }
@@ -222,8 +221,6 @@ public class SistemaTranslog {
         File arq = new File(DIR + "agendamentos.txt");
         if (!arq.exists()) return;
 
-        // Também não é possível reconstruir Agendamento
-        // porque precisamos do Frete
     }
 
     public Cliente buscarCliente(String nome) {
